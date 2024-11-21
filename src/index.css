@@ -1,0 +1,33 @@
+/* index.css - Global styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  color: #333;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+h1, h2, h3 {
+  color: #2c3e50;
+}
+
+button {
+  cursor: pointer;
+}
+
+input, select {
+  font-size: 16px;
+}
+
+ul {
+  list-style: none;
+}
