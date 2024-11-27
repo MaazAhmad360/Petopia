@@ -1,21 +1,24 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import EventSearch from "./components/EventSearchTD";
-import EventDetails from "./components/EventDetailsTD";
-import CreateEvent from "./components/CreateEventTD";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import VetSearchPage from './pages/VetSearchPage';
+import VetDetailsPage from './pages/VetDetailsPage';
+import './App.css';
 
-function App() {
-  return (
-    <Router>
-      <Routes>
-        {/* Handle the root path with a Home component or redirect */}
-        <Route path="/" element={<h1>Welcome to Petopia Events</h1>} />
-        <Route path="/events" element={<EventSearch />} />
-        <Route path="/events/:id" element={<EventDetails />} />
-        <Route path="/events/create" element={<CreateEvent />} />
-      </Routes>
-    </Router>
-  );
-}
+const App = () => {
+    return (
+        <Router>
+            <div className="app">
+                <header>
+                    <h1>Pet Veterinary Services</h1>
+                </header>
+                <Routes>
+    <Route path="/" element={<VetSearchPage />} />
+    <Route path="/vet-details/:id" element={<VetDetailsPage />} /> {/* Dynamic route */}
+</Routes>
+
+            </div>
+        </Router>
+    );
+};
 
 export default App;
