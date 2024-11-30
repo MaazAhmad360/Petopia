@@ -15,6 +15,8 @@ import AdoptionDetails from "./components/AdoptionDetails";
 import CreateAdoptionListing from "./components/CreateAdoptionListing";
 import HomePage from "./components/HomePage";
 
+import CompareEquipment from "./components/CompareEquipment"
+
 function App() {
   return (
     <Router>
@@ -34,6 +36,8 @@ function App() {
         <Route path="/adoption" element={<AdoptionSearch />} />
         <Route path="/adoption/:id" element={<AdoptionDetails />} />
         <Route path="/adoption/create" element={<CreateAdoptionListing />} />
+
+        <Route path="/compare-equipment" element={<CompareEquipment />} />
       </Routes>
     </Router>
   );
