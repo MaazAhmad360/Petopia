@@ -15,7 +15,12 @@ import AdoptionDetails from "./components/AdoptionDetails";
 import CreateAdoptionListing from "./components/CreateAdoptionListing";
 import HomePage from "./components/HomePage";
 
+// Equipment Components
 import CompareEquipment from "./components/CompareEquipment"
+import EquipmentCatalog from "./components/EquipmentCatalog";
+import EquipmentDetails from "./components/EquipmentDetails";
+import Recommendations from "./components/Recommendations";
+import WriteReview from "./components/WriteReview";
 
 function App() {
   return (
@@ -37,7 +42,12 @@ function App() {
         <Route path="/adoption/:id" element={<AdoptionDetails />} />
         <Route path="/adoption/create" element={<CreateAdoptionListing />} />
 
+        {/* Equipment Review Pages */}
         <Route path="/compare-equipment" element={<CompareEquipment />} />
+        <Route path="/equipment-catalog" element={<EquipmentCatalog />} />
+        <Route path="/equipment-details" element={<EquipmentDetails />} />
+        <Route path="/recommendations" element={<Recommendations />} />
+        <Route path="/write-review" element={<WriteReview />} />
       </Routes>
     </Router>
   );
