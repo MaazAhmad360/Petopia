@@ -9,11 +9,10 @@ const {
 
 const router = express.Router();
 
-// Equipment catalog routes
 router.get("/", getEquipmentCatalog);
 router.post("/compare", compareEquipment);
 router.get("/:id", getEquipmentDetails);
 router.post("/reviews", writeReview);
 router.get("/recommendations", getRecommendations);
 
-module.exports = router;
+export default router; // Add this line to export as default
