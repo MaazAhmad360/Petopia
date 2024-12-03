@@ -1,25 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const Rating = ({ onRate }) => {
     const [rating, setRating] = useState(0);
+    const [comment, setComment] = useState("");
 
-    const handleRating = (value) => {
-        setRating(value);
-        onRate(value);
+    const handleSubmit = () => {
+        if (!rating) {
+            alert("Please select a rating.");
+            return;
+        }
+        onRate({ rating, comment });
+        setRating(0);
+        setComment("");
     };
 
     return (
         <div className="rating">
-            <h3>Rate This Vet</h3>
-            {[1, 2, 3, 4, 5].map((star) => (
-                <span
-                    key={star}
-                    className={rating >= star ? 'filled' : ''}
-                    onClick={() => handleRating(star)}
-                >
-                    ★
-                </span>
-            ))}
+            <h2>Rate This Vet</h2>
+            <div className="stars">
+                {[1, 2, 3, 4, 5].map((star) => (
+                    <span
+                        key={star}
+                        style={{ color: star <= rating ? "gold" : "#ccc" }}
+                        onClick={() => setRating(star)}
+                    >
+                        ★
+                    </span>
+                ))}
+            </div>
+            <textarea
+                placeholder="Write a comment (optional)"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+            ></textarea>
+            <button onClick={handleSubmit}>Submit</button>
         </div>
     );
 };
