@@ -34,6 +34,7 @@ mongoose
   })
   .catch((error) => console.error("Error connecting to MongoDB:", error));
 
+
 // API routes
 app.use("/api/user", userRoutes);
 app.use("/api/pet", petRoutes);
@@ -42,3 +43,4 @@ app.use("/api/vet", vetRoutes);
 app.use("/api/appointment", appointmentRoutes);
 app.use("/api/forumsThreads", forumThreadsRoutes);
 app.use("/api/review", reviewRoutes);
+

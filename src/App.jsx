@@ -2,9 +2,9 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // Events Components
-import EventSearch from "./components/EventSearchTD";
-import EventDetails from "./components/EventDetailsTD";
-import CreateEvent from "./components/CreateEventTD";
+import EventSearch from "./components/EventSearch";
+import EventDetails from "./components/EventDetails";
+import CreateEvent from "./components/CreateEvent";
 import ThreadList from "./components/ThreadList";
 import ThreadForm from "./components/ThreadForm";
 import ReplyForm from "./components/replyToForm";
@@ -18,6 +18,10 @@ import AdoptionSearch from "./components/AdoptionSearch";
 import AdoptionDetails from "./components/AdoptionDetails";
 import CreateAdoptionListing from "./components/CreateAdoptionListing";
 import HomePage from "./components/HomePage";
+
+// Login Signup
+import Signup from "./pages/SignUp"
+import Login from "./pages/Login"
 
 function App() {
   return (
@@ -45,6 +49,10 @@ function App() {
         <Route path="/adoption" element={<AdoptionSearch />} />
         <Route path="/adoption/:id" element={<AdoptionDetails />} />
         <Route path="/adoption/create" element={<CreateAdoptionListing />} />
+
+        {/* Login/Signup */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
     </Router>
   );
