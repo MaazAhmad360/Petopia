@@ -15,6 +15,10 @@ import AdoptionDetails from "./components/AdoptionDetails";
 import CreateAdoptionListing from "./components/CreateAdoptionListing";
 import HomePage from "./components/HomePage";
 
+// Login Signup
+import Signup from "./pages/SignUp"
+import Login from "./pages/Login"
+
 function App() {
   return (
     <Router>
@@ -34,6 +38,10 @@ function App() {
         <Route path="/adoption" element={<AdoptionSearch />} />
         <Route path="/adoption/:id" element={<AdoptionDetails />} />
         <Route path="/adoption/create" element={<CreateAdoptionListing />} />
+
+        {/* Login/Signup */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
     </Router>
   );
