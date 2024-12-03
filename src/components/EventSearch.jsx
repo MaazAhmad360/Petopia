@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import axios from "axios";
 import "../styles/Events.css";
 
@@ -6,6 +7,7 @@ const EventSearch = () => {
   const [events, setEvents] = useState([]); // All events from backend
   const [filteredEvents, setFilteredEvents] = useState([]); // Events after filtering
   const [filters, setFilters] = useState({ search: "", location: "" }); // Filter criteria
+  const navigate = useNavigate(); // Initialize navigate function
 
   // Fetch events from backend
   const fetchEvents = async () => {
@@ -45,6 +47,10 @@ const EventSearch = () => {
     applyFilters(); // Apply filters whenever `filters` or `events` change
   }, [filters, events]);
 
+  const handleViewDetails = (id) => {
+    navigate(`/events/${id}`); // Programmatically navigate to the event details page
+  };
+
   return (
     <div className="event-search">
       <h2>Search Events</h2>
@@ -76,7 +82,7 @@ const EventSearch = () => {
               <h3>{event.name}</h3>
               <p>{new Date(event.date).toLocaleDateString()}</p>
               <p>{event.location}</p>
-              <a href={`/events/${event._id}`}>View Details</a>
+              <button onClick={() => handleViewDetails(event._id)}>View Details</button>
             </li>
           ))
         ) : (
