@@ -1,50 +1,75 @@
 import React, { useState } from "react";
-import "./../styles/Events.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import "../styles/Events.css";
 
 const CreateEvent = () => {
   const [formData, setFormData] = useState({
     name: "",
-    type: "",
     date: "",
+    location: "",
+    type: "",
   });
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate(); // Hook to redirect
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Placeholder for backend call
-    console.log("Creating event with data:", formData);
+    try {
+      const response = await axios.post("http://localhost:5000/api/event",formData);
+      alert(response.data.message);
+      setFormData({ name: "", date: "", location: "", type: "" });
+      navigate("/events"); // Redirect to the events page
+    } catch (error) {
+      console.error("Error creating event:", error);
+      alert("Failed to create event.");
+    }
   };
 
   return (
     <div className="create-event">
-      <h1>Create Event</h1>
+      <h2>Create Event</h2>
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Event Name"
-          value={formData.name}
-          onChange={(e) =>
-            setFormData({ ...formData, name: e.target.value })
-          }
-        />
-        <select
-          value={formData.type}
-          onChange={(e) =>
-            setFormData({ ...formData, type: e.target.value })
-          }
-        >
-          <option value="">Select Type</option>
-          <option value="Fair">Fair</option>
-          <option value="Adoption">Adoption</option>
-        </select>
-        <input
-          type="date"
-          value={formData.date}
-          onChange={(e) =>
-            setFormData({ ...formData, date: e.target.value })
-          }
-        />
-        <button type="submit">Create Event</button>
-      </form>
+  <input
+    type="text"
+    name="name"
+    placeholder="Event Name"
+    value={formData.name}
+    onChange={handleChange}
+    required
+  />
+  <input
+    type="date"
+    name="date"
+    value={formData.date}
+    onChange={handleChange}
+    required
+  />
+  <input
+    type="text"
+    name="location"
+    placeholder="Location"
+    value={formData.location}
+    onChange={handleChange}
+    required
+  />
+  {/* Replacing the dropdown with a text input for event type */}
+  <input
+    type="text"
+    name="type"
+    placeholder="Event Type"
+    value={formData.type}
+    onChange={handleChange}
+    required
+  />
+  <button type="submit">Create Event</button>
+</form>
+
     </div>
   );
 };

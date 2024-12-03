@@ -1,47 +1,88 @@
-import React, { useState } from "react";
-import "./../styles/Events.css";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "../styles/Events.css";
 
 const EventSearch = () => {
-  const [events, setEvents] = useState([
-    { id: 1, name: "Pet Fair 2024", type: "Fair", date: "2024-12-01" },
-    { id: 2, name: "Adoption Drive", type: "Adoption", date: "2024-12-05" },
-  ]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filterType, setFilterType] = useState("");
+  const [events, setEvents] = useState([]); // All events from backend
+  const [filteredEvents, setFilteredEvents] = useState([]); // Events after filtering
+  const [filters, setFilters] = useState({ search: "", location: "" }); // Filter criteria
 
-  const filteredEvents = events.filter(
-    (event) =>
-      event.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (!filterType || event.type === filterType)
-  );
+  // Fetch events from backend
+  const fetchEvents = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/event");
+      setEvents(response.data.events); // Populate events state
+      setFilteredEvents(response.data.events); // Initially, filteredEvents = all events
+    } catch (error) {
+      console.error("Error fetching events:", error);
+    }
+  };
+
+  // Fetch events on component mount
+  useEffect(() => {
+    fetchEvents();
+  }, []);
+
+  // Filter events by name and location
+  const applyFilters = () => {
+    const filtered = events.filter((event) => {
+      const matchesSearch =
+        !filters.search || event.name.toLowerCase().includes(filters.search.toLowerCase());
+      const matchesLocation =
+        !filters.location || event.location.toLowerCase().includes(filters.location.toLowerCase());
+      return matchesSearch && matchesLocation;
+    });
+    setFilteredEvents(filtered); // Update filtered events
+  };
+
+  // Reset filters and show all events
+  const handleReset = () => {
+    setFilters({ search: "", location: "" }); // Clear filter criteria
+    setFilteredEvents(events); // Reset filtered events to all events
+  };
+
+  useEffect(() => {
+    applyFilters(); // Apply filters whenever `filters` or `events` change
+  }, [filters, events]);
 
   return (
     <div className="event-search">
-      <h1>Search Events</h1>
+      <h2>Search Events</h2>
+
+      {/* Search by name */}
       <input
         type="text"
-        placeholder="Search events"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
+        placeholder="Search events by name"
+        value={filters.search}
+        onChange={(e) => setFilters((prev) => ({ ...prev, search: e.target.value }))}
       />
-      <select
-        value={filterType}
-        onChange={(e) => setFilterType(e.target.value)}
-      >
-        <option value="">All Types</option>
-        <option value="Fair">Fair</option>
-        <option value="Adoption">Adoption</option>
-      </select>
-      <div className="event-list">
-        {filteredEvents.map((event) => (
-          <div key={event.id} className="event-item">
-            <h3>{event.name}</h3>
-            <p>Type: {event.type}</p>
-            <p>Date: {event.date}</p>
-            <a href={`/events/${event.id}`}>View Details</a>
-          </div>
-        ))}
-      </div>
+
+      {/* Filter by location */}
+      <input
+        type="text"
+        placeholder="Filter by location"
+        value={filters.location}
+        onChange={(e) => setFilters((prev) => ({ ...prev, location: e.target.value }))}
+      />
+
+      {/* Reset Button */}
+      <button onClick={handleReset}>Reset Filters</button>
+
+      {/* Display filtered events */}
+      <ul>
+        {filteredEvents.length > 0 ? (
+          filteredEvents.map((event) => (
+            <li key={event._id}>
+              <h3>{event.name}</h3>
+              <p>{new Date(event.date).toLocaleDateString()}</p>
+              <p>{event.location}</p>
+              <a href={`/events/${event._id}`}>View Details</a>
+            </li>
+          ))
+        ) : (
+          <p>No events found.</p>
+        )}
+      </ul>
     </div>
   );
 };

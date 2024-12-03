@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import EventSearch from "../components/EventSearchTD";
-import EventDetails from "../components/EventDetailsTD";
-import CreateEvent from "../components/CreateEventTD";
+import EventSearch from "../components/EventSearch";
+import EventDetails from "../components/EventDetails";
+import CreateEvent from "../components/CreateEvent";
 
 const EventsPage = () => {
   const [view, setView] = useState("search"); // "search", "details", "create"

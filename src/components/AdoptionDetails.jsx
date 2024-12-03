@@ -1,21 +1,26 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import '../styles/Adoption.css';
-
-// Mock pet data
-const petDetails = {
-  1: { name: "Bella", breed: "Labrador", age: 2, gender: "Female", location: "New York", description: "Friendly and playful." },
-  2: { name: "Max", breed: "Golden Retriever", age: 4, gender: "Male", location: "Los Angeles", description: "Loves long walks." },
-  3: { name: "Milo", breed: "Beagle", age: 1, gender: "Male", location: "Chicago", description: "Very active and curious." },
-  4: { name: "Lucy", breed: "Bulldog", age: 3, gender: "Female", location: "Houston", description: "Calm and affectionate." },
-};
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import "../styles/Adoption.css";
 
 const AdoptionDetails = () => {
-  const { id } = useParams();
-  const pet = petDetails[id];
+  const { id } = useParams(); // Get pet ID from URL
+  const [pet, setPet] = useState(null); // Store pet details
+
+  useEffect(() => {
+    const fetchPetDetails = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/api/pet/${id}`);
+        setPet(response.data);
+      } catch (error) {
+        console.error("Error fetching pet details:", error.response?.data || error.message);
+      }
+    };    
+    fetchPetDetails();
+  }, [id]);
 
   if (!pet) {
-    return <p>Pet not found!</p>;
+    return <p>Loading pet details...</p>;
   }
 
   const handleBooking = () => {

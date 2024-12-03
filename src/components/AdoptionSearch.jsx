@@ -1,72 +1,88 @@
-import React, { useState } from 'react';
-import '../styles/Adoption.css';
-
-// Mock pet data
-const pets = [
-  { id: 1, name: "Bella", breed: "Labrador", age: 2, gender: "Female", location: "New York" },
-  { id: 2, name: "Max", breed: "Golden Retriever", age: 4, gender: "Male", location: "Los Angeles" },
-  { id: 3, name: "Milo", breed: "Beagle", age: 1, gender: "Male", location: "Chicago" },
-  { id: 4, name: "Lucy", breed: "Bulldog", age: 3, gender: "Female", location: "Houston" },
-];
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import "../styles/Adoption.css";
 
 const AdoptionSearch = () => {
-  const [search, setSearch] = useState('');
-  const [filters, setFilters] = useState({ breed: '', location: '', age: '', gender: '' });
+  const [pets, setPets] = useState([]); // All pets
+  const [filters, setFilters] = useState({ breed: "", location: "", minAge: "", maxAge: "" }); // Filter criteria
+  const [filteredPets, setFilteredPets] = useState([]); // Filtered pets
+  const navigate = useNavigate(); // To navigate to the details page
 
-  const filteredPets = pets.filter((pet) =>
-    (search === '' || pet.name.toLowerCase().includes(search.toLowerCase())) &&
-    (filters.breed === '' || pet.breed === filters.breed) &&
-    (filters.location === '' || pet.location === filters.location) &&
-    (filters.age === '' || pet.age === Number(filters.age)) &&
-    (filters.gender === '' || pet.gender === filters.gender)
-  );
+  // Fetch pets from backend
+  const fetchPets = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/pet");
+      setPets(response.data); // All pets
+      setFilteredPets(response.data); // Initially, all pets are shown
+    } catch (error) {
+      console.error("Error fetching pets:", error);
+    }
+  };
+
+  // Filter pets based on user input
+  const applyFilters = () => {
+    const filtered = pets.filter((pet) => {
+      const matchesBreed = !filters.breed || pet.breed.toLowerCase().includes(filters.breed.toLowerCase());
+      const matchesLocation = !filters.location || pet.location.toLowerCase().includes(filters.location.toLowerCase());
+      const matchesMinAge = !filters.minAge || pet.age >= parseInt(filters.minAge);
+      const matchesMaxAge = !filters.maxAge || pet.age <= parseInt(filters.maxAge);
+      return matchesBreed && matchesLocation && matchesMinAge && matchesMaxAge;
+    });
+    setFilteredPets(filtered);
+  };
+
+  // Fetch pets on component mount
+  useEffect(() => {
+    fetchPets();
+  }, []);
+
+  // Apply filters when criteria change
+  useEffect(() => {
+    applyFilters();
+  }, [filters, pets]);
+
+  const handleNavigate = (id) => {
+    navigate(`/adoption/${id}`); // Navigate to details page
+  };
 
   return (
     <div className="adoption-search">
       <h2>Search Pets for Adoption</h2>
-      <input
-        type="text"
-        placeholder="Search by name..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
       <div className="filters">
-        <select onChange={(e) => setFilters({ ...filters, breed: e.target.value })}>
-          <option value="">All Breeds</option>
-          <option value="Labrador">Labrador</option>
-          <option value="Golden Retriever">Golden Retriever</option>
-          <option value="Beagle">Beagle</option>
-          <option value="Bulldog">Bulldog</option>
-        </select>
-        <select onChange={(e) => setFilters({ ...filters, location: e.target.value })}>
-          <option value="">All Locations</option>
-          <option value="New York">New York</option>
-          <option value="Los Angeles">Los Angeles</option>
-          <option value="Chicago">Chicago</option>
-          <option value="Houston">Houston</option>
-        </select>
-        <select onChange={(e) => setFilters({ ...filters, age: e.target.value })}>
-          <option value="">All Ages</option>
-          <option value="1">1 year</option>
-          <option value="2">2 years</option>
-          <option value="3">3 years</option>
-          <option value="4">4 years</option>
-        </select>
-        <select onChange={(e) => setFilters({ ...filters, gender: e.target.value })}>
-          <option value="">All Genders</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-        </select>
+        <input
+          type="text"
+          placeholder="Breed"
+          value={filters.breed}
+          onChange={(e) => setFilters((prev) => ({ ...prev, breed: e.target.value }))}
+        />
+        <input
+          type="text"
+          placeholder="Location"
+          value={filters.location}
+          onChange={(e) => setFilters((prev) => ({ ...prev, location: e.target.value }))}
+        />
+        <input
+          type="number"
+          placeholder="Min Age"
+          value={filters.minAge}
+          onChange={(e) => setFilters((prev) => ({ ...prev, minAge: e.target.value }))}
+        />
+        <input
+          type="number"
+          placeholder="Max Age"
+          value={filters.maxAge}
+          onChange={(e) => setFilters((prev) => ({ ...prev, maxAge: e.target.value }))}
+        />
       </div>
       <ul className="pet-list">
         {filteredPets.map((pet) => (
-          <li key={pet.id}>
+          <li key={pet._id}>
             <h3>{pet.name}</h3>
             <p>Breed: {pet.breed}</p>
             <p>Age: {pet.age} years</p>
-            <p>Gender: {pet.gender}</p>
             <p>Location: {pet.location}</p>
-            <a href={`/adoption/${pet.id}`}>View Details</a>
+            <button onClick={() => handleNavigate(pet._id)}>View Details</button>
           </li>
         ))}
       </ul>

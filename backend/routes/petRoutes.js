@@ -1,5 +1,5 @@
 import express from 'express';
-import { addPet, getAllPets } from '../controllers/petController.js';
+import { addPet, getAllPets, getPetById } from '../controllers/petController.js';
 
 const router = express.Router();
 
@@ -8,5 +8,8 @@ router.post('/', addPet);
 
 // Get all pets
 router.get('/', getAllPets);
+
+// Get a pet by ID
+router.get('/:id', getPetById);
 
 export default router;
