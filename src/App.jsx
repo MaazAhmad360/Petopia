@@ -2,9 +2,9 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // Events Components
-import EventSearch from "./components/EventSearchTD";
-import EventDetails from "./components/EventDetailsTD";
-import CreateEvent from "./components/CreateEventTD";
+import EventSearch from "./components/EventSearch";
+import EventDetails from "./components/EventDetails";
+import CreateEvent from "./components/CreateEvent";
 import ThreadList from "./components/ThreadList";
 import ThreadForm from "./components/ThreadForm";
 import AddTagsForm from "./components/AddTagForms";
