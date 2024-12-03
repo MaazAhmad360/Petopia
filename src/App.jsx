@@ -7,7 +7,11 @@ import EventDetails from "./components/EventDetails";
 import CreateEvent from "./components/CreateEvent";
 import ThreadList from "./components/ThreadList";
 import ThreadForm from "./components/ThreadForm";
+import ReplyForm from "./components/replyToForm";
+
 import AddTagsForm from "./components/AddTagForms";
+import ThreadDetails from "./components/ThreadDetail";
+
 
 // Pet Adoption Components
 import AdoptionSearch from "./components/AdoptionSearch";
@@ -30,9 +34,16 @@ function App() {
         <Route path="/events" element={<EventSearch />} />
         <Route path="/events/:id" element={<EventDetails />} />
         <Route path="/events/create" element={<CreateEvent />} />
+
+        {/* threads */}
+        <Route path="/forum" element={<ThreadList />} />
+
         <Route path="/threads" element={<ThreadList />} />
         <Route path="/create-thread" element={<ThreadForm />} />
         <Route path="/add-tags" element={<AddTagsForm />} />
+        <Route path="/reply-threads" element={<ReplyForm />} />
+        <Route path="/thread/:threadId" element={<ThreadDetails />} />
+
 
         {/* Pet Adoption Pages */}
         <Route path="/adoption" element={<AdoptionSearch />} />
