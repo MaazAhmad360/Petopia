@@ -12,8 +12,6 @@ import appointmentRoutes from "./routes/appointmentRoutes.js";
 import forumThreadsRoutes from "./routes/forumThreadsRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
 
-// equipment routes files
-import equipmentRoutes from "./routes/equipmentRoutes.js";
 dotenv.config();
 
 const app = express();
@@ -36,6 +34,7 @@ mongoose
   })
   .catch((error) => console.error("Error connecting to MongoDB:", error));
 
+
 // API routes
 app.use("/api/user", userRoutes);
 app.use("/api/pet", petRoutes);
@@ -44,6 +43,3 @@ app.use("/api/vet", vetRoutes);
 app.use("/api/appointment", appointmentRoutes);
 app.use("/api/forumThreads", forumThreadsRoutes);
 app.use("/api/review", reviewRoutes);
-
-// api equipment ki
-app.use("/api/equipment", equipmentRoutes);
