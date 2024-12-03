@@ -1,10 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const Recommendations = () => {
-  const recommendations = [
-    { id: 2, name: "Dog Bowl", price: 15, image: "bowl.jpg" },
-    { id: 3, name: "Pet Bed", price: 50, image: "bed.jpg" },
-  ];
+  const [recommendations, setRecommendations] = useState([]); // State to store fetched recommendations
+  const [loading, setLoading] = useState(true); // State to manage loading state
+  const [error, setError] = useState(null); // State to manage error state
+
+  useEffect(() => {
+    const fetchRecommendations = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/api/recommendations");
+        setRecommendations(response.data); // Set the fetched recommendations data
+      } catch (error) {
+        setError("Error fetching recommendations.");
+        console.error("Error fetching recommendations:", error.response?.data || error.message);
+      } finally {
+        setLoading(false); // Set loading to false after fetching
+      }
+    };
+    fetchRecommendations();
+  }, []);
+
+  if (loading) return <p>Loading recommendations...</p>; // Show loading state
+  if (error) return <p>{error}</p>; // Show error message if any
 
   return (
     <div>

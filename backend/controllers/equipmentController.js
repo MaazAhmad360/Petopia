@@ -1,8 +1,11 @@
-const Equipment = require("../models/Equipment");
-const Review = require("../models/Review");
+//const Equipment = require("../models/Equipment");
+//const Review = require("../models/Review");
+import mongoose from 'mongoose';
+import Equipment from "../models/equipment.js"
+import Reviews from "../models/review.js"
 
 // Get all equipment
-exports.getEquipmentCatalog = async (req, res) => {
+export const getEquipmentCatalog = async (req, res) => {
   try {
     const equipment = await Equipment.find();
     res.json(equipment);
@@ -12,7 +15,7 @@ exports.getEquipmentCatalog = async (req, res) => {
 };
 
 // Compare equipment by IDs
-exports.compareEquipment = async (req, res) => {
+export const compareEquipment = async (req, res) => {
   try {
     const { ids } = req.body; // Array of equipment IDs
     const equipment = await Equipment.find({ _id: { $in: ids } });
@@ -23,7 +26,7 @@ exports.compareEquipment = async (req, res) => {
 };
 
 // Get equipment details
-exports.getEquipmentDetails = async (req, res) => {
+export const getEquipmentDetails = async (req, res) => {
   try {
     const equipment = await Equipment.findById(req.params.id);
     const reviews = await Review.find({ equipmentId: req.params.id });
@@ -34,7 +37,7 @@ exports.getEquipmentDetails = async (req, res) => {
 };
 
 // Write a review
-exports.writeReview = async (req, res) => {
+export const writeReview = async (req, res) => {
   try {
     const { equipmentId, user, rating, comment } = req.body;
     const review = new Review({ equipmentId, user, rating, comment });
@@ -46,7 +49,7 @@ exports.writeReview = async (req, res) => {
 };
 
 // Get equipment recommendations
-exports.getRecommendations = async (req, res) => {
+export const getRecommendations = async (req, res) => {
   try {
     const recommendations = await Equipment.find().sort({ rating: -1 }).limit(3);
     res.json(recommendations);

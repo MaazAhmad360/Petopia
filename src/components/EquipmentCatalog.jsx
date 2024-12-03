@@ -1,12 +1,21 @@
-﻿import React, { useState } from "react";
+﻿import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const EquipmentCatalog = () => {
-  const [equipmentList] = useState([
-    { id: 1, name: "Pet Leash", price: 20, rating: 4.5, image: "leash.jpg" },
-    { id: 2, name: "Dog Bowl", price: 15, rating: 4.8, image: "bowl.jpg" },
-  ]);
-
+  const [equipmentList, setEquipmentList] = useState([]); // Store fetched equipment list
   const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    const fetchEquipment = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/api/equipment");
+        setEquipmentList(response.data); // Set the fetched equipment data
+      } catch (error) {
+        console.error("Error fetching equipment:", error.response?.data || error.message);
+      }
+    };
+    fetchEquipment();
+  }, []);
 
   const handleSearch = (e) => setSearch(e.target.value);
 

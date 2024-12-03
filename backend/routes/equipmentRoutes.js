@@ -1,11 +1,11 @@
-const express = require("express");
-const {
+import express from "express";
+import {
   getEquipmentCatalog,
   compareEquipment,
   getEquipmentDetails,
   writeReview,
   getRecommendations,
-} = require("../controllers/equipmentController");
+} from "../controllers/equipmentController.js";
 
 const router = express.Router();
 
@@ -16,4 +16,4 @@ router.get("/:id", getEquipmentDetails);
 router.post("/reviews", writeReview);
 router.get("/recommendations", getRecommendations);
 
-module.exports = router;
+export default router;
