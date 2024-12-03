@@ -1,70 +1,67 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // For navigation
+import { createForumThread } from "../services/api"; // Import the API function
 
 const ThreadForm = () => {
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
-    const [tags, setTags] = useState('');
-    const [status, setStatus] = useState('');
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [tags, setTags] = useState("");
+  const [status, setStatus] = useState("");
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        
-        const newThread = {
-            title,
-            content,
-            tags: tags.split(',').map(tag => tag.trim()),
-            author: 'CurrentUser', // This should be dynamic based on logged-in user
-            creationDate: new Date().toISOString(),
-        };
+  const navigate = useNavigate(); // For navigation after thread creation
 
-        // Simulate API call to create thread
-        createThread(newThread)
-            .then(response => setStatus(response.message))
-            .catch(error => setStatus('Error creating thread'));
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const newThread = {
+      title,
+      content,
+      tags: tags.split(",").map((tag) => tag.trim()), // Convert tags into an array
     };
 
-    const createThread = (thread) => {
-        // Simulate a real API call (use fetch or axios in a real app)
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                console.log('Thread created:', thread);
-                resolve({ message: 'Thread created successfully!' });
-            }, 1000);
-        });
-    };
+    try {
+      const createdThread = await createForumThread(newThread); // Use API function
+      setStatus("Thread created successfully!");
+      navigate("/"); // Redirect to the thread list page
+    } catch (error) {
+      setStatus(
+        "Error creating thread: " + (error.response?.data?.message || error.message)
+      );
+    }
+  };
 
-    return (
-        <div className="container">
-            <h1>Create Forum Thread</h1>
-            <form onSubmit={handleSubmit}>
-                <label>Title:</label>
-                <input 
-                    type="text" 
-                    value={title} 
-                    onChange={(e) => setTitle(e.target.value)} 
-                    required 
-                />
+  return (
+    <div className="container">
+      <h1>Create Forum Thread</h1>
+      <form onSubmit={handleSubmit}>
+        <label>Title:</label>
+        <input
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
 
-                <label>Content:</label>
-                <textarea 
-                    value={content} 
-                    onChange={(e) => setContent(e.target.value)} 
-                    rows="4" 
-                    required 
-                />
+        <label>Content:</label>
+        <textarea
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          rows="4"
+          required
+        />
 
-                <label>Tags (comma separated):</label>
-                <input 
-                    type="text" 
-                    value={tags} 
-                    onChange={(e) => setTags(e.target.value)} 
-                />
+        <label>Tags (comma separated):</label>
+        <input
+          type="text"
+          value={tags}
+          onChange={(e) => setTags(e.target.value)}
+        />
 
-                <button type="submit">Create Thread</button>
-            </form>
-            <div>{status}</div>
-        </div>
-    );
+        <button type="submit">Create Thread</button>
+      </form>
+      {status && <div>{status}</div>}
+    </div>
+  );
 };
 
 export default ThreadForm;

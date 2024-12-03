@@ -42,9 +42,9 @@ mongoose
 //app.use("/api/pet", petRoutes);
 //app.use("/api/event", eventRoutes);
 app.use("/api/vet", vetRoutes);
-//app.use("/api/appointment", appointmentRoutes);
-//app.use("/api/forumThreads", forumThreadsRoutes);
-//app.use("/api/review", reviewRoutes);
+app.use("/api/appointment", appointmentRoutes);
+app.use("/api/forumsThreads", forumThreadsRoutes);
+app.use("/api/review", reviewRoutes);
 
 // api equipment ki
 //app.use("/api/equipment", equipmentRoutes);
