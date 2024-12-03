@@ -1,20 +1,5 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+.app {
   text-align: center;
-}
-
-body {
-  --Primary-Color-Red: #760504;
-  --Secondary-Color-Yellow: #fbdc6a;
-  --Background-Color-Black: #222222;
-  --Text-Color-Black: #090a0e;
-  
-  --margin-left: 82px;
-
-  margin: 0;
-  padding: 0;
 }
 
 .logo {

@@ -1,8 +1,12 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+// Import necessary components/pages
+import VetSearchPage from "./pages/VetSearchPage";
+import VetDetailsPage from "./pages/VetDetailsPage";
+import "./App.css";
 
 // Events Components
-import EventSearch from "./components/EventSearch";
+/*import EventSearch from "./components/EventSearch";
 import EventDetails from "./components/EventDetails";
 import CreateEvent from "./components/CreateEvent";
 import ThreadList from "./components/ThreadList";
@@ -19,16 +23,21 @@ import AdoptionDetails from "./components/AdoptionDetails";
 import CreateAdoptionListing from "./components/CreateAdoptionListing";
 import HomePage from "./components/HomePage";
 
-// Login Signup
-import Signup from "./pages/SignUp"
-import Login from "./pages/Login"
-
-function App() {
+// Login/Signup
+import Signup from "./pages/SignUp";
+import Login from "./pages/Login";
+*/
+const App = () => {
   return (
     <Router>
-      <Routes>
-        {/* Home Page */}
-        <Route path="/" element={<HomePage />} />
+      <div className="app">
+        <header>
+          <h1>Pet Veterinary Services</h1>
+        </header>
+        <Routes>
+          {/* Vet Pages */}
+          <Route path="/" element={<VetSearchPage />} />
+          <Route path="/vet-details/:id" element={<VetDetailsPage />} />
 
         {/* Events Pages */}
         <Route path="/events" element={<EventSearch />} />
@@ -45,17 +54,20 @@ function App() {
         <Route path="/thread/:threadId" element={<ThreadDetails />} />
 
 
-        {/* Pet Adoption Pages */}
-        <Route path="/adoption" element={<AdoptionSearch />} />
-        <Route path="/adoption/:id" element={<AdoptionDetails />} />
-        <Route path="/adoption/create" element={<CreateAdoptionListing />} />
+          {/* Pet Adoption Pages */}
+          {/* <Route path="/adoption" element={<AdoptionSearch />} />
+          <Route path="/adoption/:id" element={<AdoptionDetails />} />
+          <Route path="/adoption/create" element={<CreateAdoptionListing />} /> */}
 
-        {/* Login/Signup */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-      </Routes>
+          {/* Login/Signup Pages */}
+          {/* <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} /> */}
+        </Routes>
+      </div>
     </Router>
   );
-}
+};
+
+
 
 export default App;

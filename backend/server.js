@@ -12,6 +12,8 @@ import appointmentRoutes from "./routes/appointmentRoutes.js";
 import forumThreadsRoutes from "./routes/forumThreadsRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
 
+// equipment routes files
+//import equipmentRoutes from "./routes/equipmentRoutes.js";
 dotenv.config();
 
 const app = express();
@@ -36,11 +38,13 @@ mongoose
 
 
 // API routes
-app.use("/api/user", userRoutes);
-app.use("/api/pet", petRoutes);
-app.use("/api/event", eventRoutes);
+//app.use("/api/user", userRoutes);
+//app.use("/api/pet", petRoutes);
+//app.use("/api/event", eventRoutes);
 app.use("/api/vet", vetRoutes);
 app.use("/api/appointment", appointmentRoutes);
 app.use("/api/forumsThreads", forumThreadsRoutes);
 app.use("/api/review", reviewRoutes);
 
+// api equipment ki
+//app.use("/api/equipment", equipmentRoutes);
