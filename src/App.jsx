@@ -1,10 +1,28 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-// Import only necessary components/pages
+// Import necessary components/pages
 import VetSearchPage from "./pages/VetSearchPage";
 import VetDetailsPage from "./pages/VetDetailsPage";
 import "./App.css";
 
+// Events Components
+/*import EventSearch from "./components/EventSearch";
+import EventDetails from "./components/EventDetails";
+import CreateEvent from "./components/CreateEvent";
+import ThreadList from "./components/ThreadList";
+import ThreadForm from "./components/ThreadForm";
+import AddTagsForm from "./components/AddTagForms";
+
+// Pet Adoption Components
+import AdoptionSearch from "./components/AdoptionSearch";
+import AdoptionDetails from "./components/AdoptionDetails";
+import CreateAdoptionListing from "./components/CreateAdoptionListing";
+import HomePage from "./components/HomePage";
+
+// Login/Signup
+import Signup from "./pages/SignUp";
+import Login from "./pages/Login";
+*/
 const App = () => {
   return (
     <Router>
@@ -13,31 +31,32 @@ const App = () => {
           <h1>Pet Veterinary Services</h1>
         </header>
         <Routes>
-          {/* Active Routes */}
+          {/* Vet Pages */}
           <Route path="/" element={<VetSearchPage />} />
-          <Route path="/vet-details/:id" element={<VetDetailsPage />} /> {/* Dynamic route */}
+          <Route path="/vet-details/:id" element={<VetDetailsPage />} />
 
-          {/* Uncomment and use other routes when needed */}
-          {/*
-          <Route path="/events" element={<EventSearch />} />
+          {/* Events Pages */}
+          {/* <Route path="/events" element={<EventSearch />} />
           <Route path="/events/:id" element={<EventDetails />} />
           <Route path="/events/create" element={<CreateEvent />} />
           <Route path="/threads" element={<ThreadList />} />
           <Route path="/create-thread" element={<ThreadForm />} />
-          <Route path="/add-tags" element={<AddTagsForm />} />
-          <Route path="/adoption" element={<AdoptionSearch />} />
+          <Route path="/add-tags" element={<AddTagsForm />} /> */}
+
+          {/* Pet Adoption Pages */}
+          {/* <Route path="/adoption" element={<AdoptionSearch />} />
           <Route path="/adoption/:id" element={<AdoptionDetails />} />
-          <Route path="/adoption/create" element={<CreateAdoptionListing />} />
-          <Route path="/compare-equipment" element={<CompareEquipment />} />
-          <Route path="/equipment-catalog" element={<EquipmentCatalog />} />
-          <Route path="/equipment-details" element={<EquipmentDetails />} />
-          <Route path="/recommendations" element={<Recommendations />} />
-          <Route path="/write-review" element={<WriteReview />} />
-          */}
+          <Route path="/adoption/create" element={<CreateAdoptionListing />} /> */}
+
+          {/* Login/Signup Pages */}
+          {/* <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} /> */}
         </Routes>
       </div>
     </Router>
   );
 };
+
+
 
 export default App;
