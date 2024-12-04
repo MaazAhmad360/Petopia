@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Navbar from "./Navbar";
 
 const AddTagsForm = () => {
   const [threadId, setThreadId] = useState("");
@@ -56,6 +57,8 @@ const AddTagsForm = () => {
 
   return (
     <div className="container">
+      {/* Sidebar for navigation */}
+      <Navbar />
       <h1>Add Tags to Thread</h1>
       <form onSubmit={handleSubmit}>
         <label>Thread ID:</label>

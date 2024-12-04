@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import "../styles/Adoption.css";
+import Navbar from "./Navbar";
 
 const AdoptionDetails = () => {
   const { id } = useParams(); // Get pet ID from URL
@@ -29,6 +30,8 @@ const AdoptionDetails = () => {
 
   return (
     <div className="adoption-details">
+      {/* Sidebar for navigation */}
+      <Navbar />
       <h2>{pet.name}</h2>
       <p><strong>Breed:</strong> {pet.breed}</p>
       <p><strong>Age:</strong> {pet.age} years</p>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../AxioInstance";
 import "../styles/ProfilePage.css";
+import Navbar from "../components/Navbar";
 
 const ProfilePage = () => {
     const [userDetails, setUserDetails] = useState(null); // User details state
@@ -54,6 +55,8 @@ const ProfilePage = () => {
 
     return (
         <div className="profile-page">
+            {/* Sidebar for navigation */}
+            <Navbar />
             {/* Profile Header */}
             <div className="profile-header">
                 <img

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "../AxioInstance"; // Axios instance with authentication
+import Navbar from "./Navbar";
 
 const EventDetails = () => {
   const { id } = useParams(); // Extract event ID from the URL
@@ -42,6 +43,8 @@ const EventDetails = () => {
 
   return (
     <div className="event-details">
+      {/* Sidebar for navigation */}
+      <Navbar />
       <h2>{event.name}</h2>
       <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
       <p><strong>Location:</strong> {event.location}</p>

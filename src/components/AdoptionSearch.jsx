@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/Adoption.css";
+import Navbar from "./Navbar";
 
 const AdoptionSearch = () => {
   const [pets, setPets] = useState([]); // All pets
@@ -48,6 +49,8 @@ const AdoptionSearch = () => {
 
   return (
     <div className="adoption-search">
+      {/* Sidebar for navigation */}
+      <Navbar />
       <h2>Search Pets for Adoption</h2>
       <div className="filters">
         <input

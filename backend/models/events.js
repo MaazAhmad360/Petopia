@@ -7,10 +7,11 @@ const eventSchema = new mongoose.Schema(
     date: Date,
     location: String,
     type: String,
-    organizer: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    attendees: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    organizer: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
+    attendees: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
   },
   { timestamps: true }
 );
+const Event = mongoose.model("Event", eventSchema);
 
 export default mongoose.model("Event", eventSchema);

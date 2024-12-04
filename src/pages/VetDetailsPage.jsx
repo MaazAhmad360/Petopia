@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import VetBookingForm from "../components/VetBookingForm";
 import Rating from "../components/Rating";
 import "../styles/VetDetails.css";
+import Navbar from "../components/Navbar";
 
 const VetDetailsPage = () => {
     const { id } = useParams(); // Extract the vet ID from the route parameter
@@ -78,6 +79,8 @@ const VetDetailsPage = () => {
 
     return (
         <div className="vet-details-page">
+            {/* Sidebar for navigation */}
+            <Navbar />
             <div className="vet-details">
                 <h1>{vet.name}</h1>
                 <p>Specialty: {vet.specialty}</p>

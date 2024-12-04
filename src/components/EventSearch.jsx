@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import axios from "axios";
 import "../styles/Events.css";
+import Navbar from "./Navbar";
 
 const EventSearch = () => {
   const [events, setEvents] = useState([]); // All events from backend
@@ -53,6 +54,8 @@ const EventSearch = () => {
 
   return (
     <div className="event-search">
+      {/* Sidebar for navigation */}
+      <Navbar />
       <h2>Search Events</h2>
 
       {/* Search by name */}
