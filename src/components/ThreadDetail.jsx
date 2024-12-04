@@ -95,21 +95,21 @@ const ThreadDetail = () => {
       )}
 
       {/* Add Tags (Visible only to the thread owner) */}
-      {thread.author?._id === "currentUserId" && ( // Replace "currentUserId" with actual logged-in user ID
-        <div className="add-tags-form">
-          <h3>Add Tags</h3>
-          <form onSubmit={handleAddTags}>
-            <input
-              type="text"
-              value={tagInput}
-              onChange={(e) => setTagInput(e.target.value)}
-              placeholder="Enter tags, separated by commas"
-              required
-            />
-            <button type="submit">Add Tags</button>
-          </form>
-        </div>
-      )}
+      
+      <div className="add-tags-form">
+        <h3>Add Tags</h3>
+        <form onSubmit={handleAddTags}>
+          <input
+            type="text"
+            value={tagInput}
+            onChange={(e) => setTagInput(e.target.value)}
+            placeholder="Enter tags, separated by commas"
+            required
+          />
+          <button type="submit">Add Tags</button>
+        </form>
+      </div>
+    
 
       {/* Replies Section */}
       <h3>Replies:</h3>

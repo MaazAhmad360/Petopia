@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchForumThreads, searchForumThreads } from "../services/api";
 import "../styles/ThreadList.css"; 
+import Navbar from "./Navbar";
 
 const ThreadList = () => {
   const [threads, setThreads] = useState([]);
@@ -60,6 +61,8 @@ const ThreadList = () => {
 
   return (
     <div className="container">
+      {/* Sidebar for navigation */}
+      <Navbar />
       <h1>Forum Threads</h1>
 
       {/* Search Bar */}

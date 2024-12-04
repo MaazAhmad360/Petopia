@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // For navigation
 import { createForumThread } from "../services/api"; // Import the API function
 import "../styles/ThreadForm.css";
+import Navbar from "./Navbar";
 
 const ThreadForm = () => {
   const [title, setTitle] = useState("");
@@ -33,6 +34,8 @@ const ThreadForm = () => {
 
   return (
     <div className="container">
+      {/* Sidebar for navigation */}
+      <Navbar />
       <h1>Create Forum Thread</h1>
       <form onSubmit={handleSubmit}>
         <label>Title:</label>

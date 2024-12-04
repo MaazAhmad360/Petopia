@@ -7,9 +7,6 @@ const equipmentSchema = new mongoose.Schema(
     description: String,
     brand: String,
     reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: "Review" }],
-    aiRecommendations: [
-      { type: mongoose.Schema.Types.ObjectId, ref: "AIRecommendation" },
-    ],
   },
   { timestamps: true }
 );

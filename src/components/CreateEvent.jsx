@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../styles/Events.css";
+import Navbar from "./Navbar";
 
 const CreateEvent = () => {
   const [formData, setFormData] = useState({
@@ -33,6 +34,8 @@ const CreateEvent = () => {
 
   return (
     <div className="create-event">
+      {/* Sidebar for navigation */}
+      <Navbar />
       <h2>Create Event</h2>
       <form onSubmit={handleSubmit}>
   <input

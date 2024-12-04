@@ -11,6 +11,7 @@ import vetRoutes from "./routes/vetRoutes.js";
 import appointmentRoutes from "./routes/appointmentRoutes.js";
 import forumThreadsRoutes from "./routes/forumThreadsRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
+import equipmentRoutes from "./routes/equipmentRoutes.js";
 
 // equipment routes files
 //import equipmentRoutes from "./routes/equipmentRoutes.js";
@@ -45,6 +46,7 @@ app.use("/api/vet", vetRoutes);
 app.use("/api/appointment", appointmentRoutes);
 app.use("/api/forumsThreads", forumThreadsRoutes);
 app.use("/api/review", reviewRoutes);
+app.use("/api/equipment", equipmentRoutes);
 
 // api equipment ki
 // app.use("/api/equipment", equipmentRoutes);

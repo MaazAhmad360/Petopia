@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "../styles/Adoption.css";
+import Navbar from "./Navbar";
 
 const CreateAdoptionListing = () => {
   const [formData, setFormData] = useState({
@@ -40,6 +41,8 @@ const CreateAdoptionListing = () => {
 
   return (
     <div className="create-adoption">
+      {/* Sidebar for navigation */}
+      <Navbar />
       <h2>Create Adoption Listing</h2>
       <form onSubmit={handleSubmit}>
         <input

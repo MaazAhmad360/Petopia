@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { replyToForumThread } from "../services/api"; // Import the API function
+import Navbar from "./Navbar";
 
 const ReplyForm = ({ threadId, onReplyAdded }) => {
   const [content, setContent] = useState("");
@@ -24,6 +25,8 @@ const ReplyForm = ({ threadId, onReplyAdded }) => {
 
   return (
     <div>
+      {/* Sidebar for navigation */}
+      <Navbar />
       <h2>Reply to this thread</h2>
       <form onSubmit={handleReplySubmit}>
         <textarea

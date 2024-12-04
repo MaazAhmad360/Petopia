@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/VetSearch.css";
+import Navbar from "../components/Navbar";
 
 const VetSearchPage = () => {
   const navigate = useNavigate();
@@ -42,6 +43,8 @@ const VetSearchPage = () => {
 
   return (
     <div className="vet-search-page">
+      {/* Sidebar for navigation */}
+      <Navbar />
       <header>
         <h1>Pet Veterinary Services</h1>
       </header>

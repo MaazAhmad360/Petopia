@@ -30,6 +30,8 @@ import Login from "./pages/Login";
 
 import ProfilePage from "./pages/ProfilePage";
 
+import EquipmentCatalog from "./components/EquipmentCatalog";
+
 const App = () => {
   return (
     <Router>
@@ -61,6 +63,8 @@ const App = () => {
           <Route path="/adoption" element={<AdoptionSearch />} />
           <Route path="/adoption/:id" element={<AdoptionDetails />} />
           <Route path="/adoption/create" element={<CreateAdoptionListing />} />
+
+          <Route path="/equipment" element={<EquipmentCatalog />} />
 
           <Route path="/profile-page" element={<ProfilePage />} />
           </Route>
