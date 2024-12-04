@@ -1,0 +1,73 @@
+/* Container Styling */
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: var(--color-card-background);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px var(--color-shadow);
+  }
+  
+  /* Page Title */
+  .container h1 {
+    text-align: center;
+    color: var(--color-text);
+    margin-bottom: 20px;
+  }
+  
+  /* Form Styling */
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  form label {
+    font-size: 16px;
+    color: var(--color-text);
+    margin-bottom: 5px;
+  }
+  
+  form input,
+  form textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid var(--color-muted-text);
+    border-radius: 4px;
+    background-color: var(--color-background);
+    color: var(--color-text);
+  }
+  
+  form textarea {
+    resize: none; /* Prevent resizing */
+  }
+  
+  form button {
+    padding: 10px 15px;
+    background-color: var(--color-primary);
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  form button:hover {
+    background-color: var(--color-primary-dark);
+  }
+  
+  /* Status Message */
+  .container div {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 14px;
+    color: var(--color-info);
+  }
+  
+  .container div.error {
+    color: var(--color-danger);
+  }
+  

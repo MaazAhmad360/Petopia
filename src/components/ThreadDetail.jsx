@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom"; // To get threadId from URL
-import { fetchThreadDetails, addTagsToThread, replyToForumThread } from "../services/api";
-import "../styles/forums.css"; 
-
+import { fetchThreadDetails, addTagsToThread, replyToForumThread } from "../services/api"; // Import the API function
+import "../styles/ThreadDetail.css";
 
 const ThreadDetail = () => {
   const [thread, setThread] = useState(null);

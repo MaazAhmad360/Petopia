@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchForumThreads, searchForumThreads } from "../services/api";
-import "../styles/forums.css"; 
+import "../styles/ThreadList.css"; 
 
 const ThreadList = () => {
   const [threads, setThreads] = useState([]);

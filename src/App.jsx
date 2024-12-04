@@ -4,9 +4,10 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import VetSearchPage from "./pages/VetSearchPage";
 import VetDetailsPage from "./pages/VetDetailsPage";
 import "./App.css";
+import PrivateRoute from "./PrivateRoute";
 
 // Events Components
-/*import EventSearch from "./components/EventSearch";
+import EventSearch from "./components/EventSearch";
 import EventDetails from "./components/EventDetails";
 import CreateEvent from "./components/CreateEvent";
 import ThreadList from "./components/ThreadList";
@@ -26,17 +27,17 @@ import HomePage from "./components/HomePage";
 // Login/Signup
 import Signup from "./pages/SignUp";
 import Login from "./pages/Login";
-*/
+
 const App = () => {
   return (
     <Router>
       <div className="app">
-        <header>
-          <h1>Pet Veterinary Services</h1>
-        </header>
         <Routes>
+        <Route index element={<HomePage />} />
+
+        <Route element={<PrivateRoute />}>
           {/* Vet Pages */}
-          <Route path="/" element={<VetSearchPage />} />
+          <Route path="/veterinary" element={<VetSearchPage />} />
           <Route path="/vet-details/:id" element={<VetDetailsPage />} />
 
         {/* Events Pages */}
@@ -55,13 +56,13 @@ const App = () => {
 
 
           {/* Pet Adoption Pages */}
-          {/* <Route path="/adoption" element={<AdoptionSearch />} />
+          <Route path="/adoption" element={<AdoptionSearch />} />
           <Route path="/adoption/:id" element={<AdoptionDetails />} />
-          <Route path="/adoption/create" element={<CreateAdoptionListing />} /> */}
-
+          <Route path="/adoption/create" element={<CreateAdoptionListing />} />
+          </Route>
           {/* Login/Signup Pages */}
-          {/* <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} /> */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
         </Routes>
       </div>
     </Router>

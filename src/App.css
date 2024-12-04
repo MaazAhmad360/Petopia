@@ -1,3 +1,28 @@
+:root {
+  /* Primary Colors */
+  --color-primary: #007bff; /* Blue */
+  --color-primary-dark: #0056b3;
+
+  /* Secondary Colors */
+  --color-secondary: #28a745; /* Green */
+  --color-secondary-dark: #218838;
+
+  /* Background and Text */
+  --color-background: #f9f9f9;
+  --color-card-background: #ffffff;
+  --color-text: #333333;
+  --color-muted-text: #666666;
+
+  /* Shadows */
+  --color-shadow: rgba(0, 0, 0, 0.1);
+  --color-shadow-hover: rgba(0, 0, 0, 0.2);
+
+  /* Other Colors */
+  --color-danger: #dc3545; /* Red */
+  --color-warning: #ffc107; /* Yellow */
+  --color-info: #17a2b8; /* Teal */
+}
+
 .app {
   text-align: center;
 }

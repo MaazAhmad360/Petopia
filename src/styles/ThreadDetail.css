@@ -1,0 +1,112 @@
+/* Container for the Thread Details */
+.thread-detail-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: var(--color-card-background);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px var(--color-shadow);
+  }
+  
+  /* Thread Title */
+  .thread-detail-container h1 {
+    font-size: 24px;
+    color: var(--color-text);
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  /* Thread Content */
+  .thread-detail-container p {
+    font-size: 16px;
+    color: var(--color-muted-text);
+    margin-bottom: 10px;
+  }
+  
+  .thread-detail-container strong {
+    color: var(--color-text);
+  }
+  
+  /* Replies Section */
+  .thread-detail-container h3 {
+    margin-top: 20px;
+    font-size: 20px;
+    color: var(--color-text);
+  }
+  
+  .thread-detail-container ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .thread-detail-container li {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: var(--color-background);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px var(--color-shadow);
+  }
+  
+  .thread-detail-container li p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: var(--color-text);
+  }
+  
+  /* Reply Form Container */
+  .reply-form-container {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: var(--color-background);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px var(--color-shadow);
+  }
+  
+  /* Reply Form Title */
+  .reply-form-container h3 {
+    margin-bottom: 15px;
+    font-size: 18px;
+    color: var(--color-text);
+  }
+  
+  /* Reply Textarea */
+  .reply-form-container textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid var(--color-muted-text);
+    border-radius: 4px;
+    background-color: var(--color-card-background);
+    color: var(--color-text);
+    resize: none; /* Prevent resizing */
+    margin-bottom: 15px;
+  }
+  
+  /* Submit Button */
+  .reply-form-container button {
+    padding: 10px 20px;
+    background-color: var(--color-primary);
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .reply-form-container button:hover {
+    background-color: var(--color-primary-dark);
+  }
+  
+  /* Status Message */
+  .reply-form-container p {
+    margin-top: 10px;
+    font-size: 14px;
+    color: var(--color-info);
+  }
+  
+  .reply-form-container p.error {
+    color: var(--color-danger);
+  }
+  
