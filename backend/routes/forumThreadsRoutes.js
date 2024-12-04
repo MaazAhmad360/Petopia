@@ -7,6 +7,7 @@ import {
   searchForumThreads,
   replyToThread,
   getThreadDetails,
+  getUserThreads
 } from "../controllers/forumThreadController.js";
 
 
@@ -17,6 +18,9 @@ router.post("/create", createForumThread);
 
 // Get all forum threads
 router.get("/", getforumThreads);
+
+// Get forum threads by a specific user
+router.get("/user-created", getUserThreads); 
 
 router.patch("/:id/tags", addTags);
 

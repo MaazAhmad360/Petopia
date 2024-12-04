@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "../AxioInstance";
 import "../styles/ProfilePage.css";
 
 const ProfilePage = () => {
     const [userDetails, setUserDetails] = useState(null); // User details state
-    const [activeTab, setActiveTab] = useState("adoptions"); // Active tab state
+    const [activeTab, setActiveTab] = useState("threads"); // Default active tab
     const [data, setData] = useState([]); // Data for the active tab
+    const navigate = useNavigate();
 
     // Fetch user details on component mount
     useEffect(() => {
@@ -26,13 +28,13 @@ const ProfilePage = () => {
         const fetchData = async () => {
             try {
                 const endpointMap = {
-                    adoptions: "/api/adoption/booked",
-                    appointments: "/api/vet/appointments",
-                    events: "/api/event/user-going",
                     threads: "/api/forumsThreads/user-created",
+                    // Add other endpoints for tabs here if necessary
                 };
-                const response = await axios.get(endpointMap[activeTab]);
-                setData(response.data);
+                if (endpointMap[activeTab]) {
+                    const response = await axios.get(endpointMap[activeTab]);
+                    setData(response.data);
+                }
             } catch (error) {
                 console.error(`Error fetching data for ${activeTab}:`, error);
             }
@@ -40,6 +42,11 @@ const ProfilePage = () => {
 
         if (activeTab) fetchData();
     }, [activeTab]);
+
+    // Navigate to thread details
+    const handleThreadClick = (threadId) => {
+        navigate(`/thread/${threadId}`);
+    };
 
     if (!userDetails) {
         return <p>Loading profile...</p>;
@@ -63,40 +70,37 @@ const ProfilePage = () => {
             {/* Tabs */}
             <div className="profile-tabs">
                 <button
-                    className={activeTab === "adoptions" ? "active" : ""}
-                    onClick={() => setActiveTab("adoptions")}
-                >
-                    Pet Adoptions
-                </button>
-                <button
-                    className={activeTab === "appointments" ? "active" : ""}
-                    onClick={() => setActiveTab("appointments")}
-                >
-                    Vet Appointments
-                </button>
-                <button
-                    className={activeTab === "events" ? "active" : ""}
-                    onClick={() => setActiveTab("events")}
-                >
-                    Events
-                </button>
-                <button
                     className={activeTab === "threads" ? "active" : ""}
                     onClick={() => setActiveTab("threads")}
                 >
                     Forum Threads
                 </button>
+                {/* Add other tabs as needed */}
             </div>
 
             {/* Content Section */}
             <div className="profile-content">
-                {data.length === 0 ? (
-                    <p>No data available for this section.</p>
-                ) : (
-                    <ul>
-                        {data.map((item, index) => (
-                            <li key={index}>{item.title || item.name}</li>
-                        ))}
+                {activeTab === "threads" && (
+                    <ul className="thread-list">
+                        {data.length === 0 ? (
+                            <p>No threads found.</p>
+                        ) : (
+                            data.map((thread) => (
+                                <li
+                                    key={thread._id}
+                                    className="thread-item"
+                                    onClick={() => handleThreadClick(thread._id)}
+                                >
+                                    <h3>{thread.title}</h3>
+                                    <p>
+                                        <strong>Tags:</strong> {thread.tags.join(", ")}
+                                    </p>
+                                    <p>
+                                        <strong>Replies:</strong> {thread.replies.length}
+                                    </p>
+                                </li>
+                            ))
+                        )}
                     </ul>
                 )}
             </div>
