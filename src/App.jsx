@@ -19,6 +19,12 @@ import HomePage from "./components/HomePage";
 import Signup from "./pages/SignUp"
 import Login from "./pages/Login"
 
+import EquipmentDetails from "./components/EquipmentDetails";
+import EquipmentCatalog from "./components/EquipmentCatalog";
+import CompareEquipment from "./components/CompareEquipment";
+import Recommendations from "./components/Recommendations";
+import WriteReview from "./components/WriteReview";
+
 function App() {
   return (
     <Router>
@@ -42,6 +48,13 @@ function App() {
         {/* Login/Signup */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+
+         {/* Equipment */}
+        <Route path="/equipment" element={<EquipmentDetails />} />
+        <Route path="/catalog" element={<EquipmentCatalog />} />
+        <Route path="/compare" element={<CompareEquipment />} />
+        <Route path="/recommendations" element={<Recommendations />} />
+        <Route path="/review" element={<WriteReview />} />
       </Routes>
     </Router>
   );
