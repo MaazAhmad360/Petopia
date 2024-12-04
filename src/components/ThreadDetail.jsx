@@ -1,32 +1,34 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom"; // To get threadId from URL
-import { fetchThreadDetails } from "../services/api"; // Import the API function
-import { replyToForumThread } from "../services/api";
+import { fetchThreadDetails, addTagsToThread, replyToForumThread } from "../services/api";
+import "../styles/forums.css"; 
+
 
 const ThreadDetail = () => {
   const [thread, setThread] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [replyContent, setReplyContent] = useState(""); // State for reply content
-  const [status, setStatus] = useState(""); // State for status messages
+  const [replyContent, setReplyContent] = useState("");
+  const [tagInput, setTagInput] = useState(""); // State for new tags
+  const [status, setStatus] = useState("");
 
-  const { threadId } = useParams(); // Get the threadId from the URL parameters
+  const { threadId } = useParams();
 
   useEffect(() => {
     const loadThreadDetails = async () => {
       setLoading(true);
       try {
-        const data = await fetchThreadDetails(threadId); // Call the API function
-        setThread(data); // Set the fetched thread data
+        const data = await fetchThreadDetails(threadId);
+        setThread(data);
         setLoading(false);
       } catch (error) {
-        setError(error.message); // Handle errors
+        setError(error.message);
         setLoading(false);
       }
     };
 
-    loadThreadDetails(); // Call the function when the component mounts or threadId changes
-  }, [threadId]); // Dependency array ensures it re-fetches if threadId changes
+    loadThreadDetails();
+  }, [threadId]);
 
   const handleReplySubmit = async (e) => {
     e.preventDefault();
@@ -37,10 +39,11 @@ const ThreadDetail = () => {
 
     try {
       const replyData = { content: replyContent };
-      await replyToForumThread(threadId, replyData); // Submit reply
-      setReplyContent(""); // Clear the reply form
+      await replyToForumThread(threadId, replyData);
+      setReplyContent("");
       setStatus("Reply added successfully!");
-      // Refresh thread details to show the new reply
+
+      // Refresh thread details
       const updatedThread = await fetchThreadDetails(threadId);
       setThread(updatedThread);
     } catch (error) {
@@ -48,11 +51,24 @@ const ThreadDetail = () => {
     }
   };
 
+  const handleAddTags = async (e) => {
+    e.preventDefault();
+    if (tagInput.trim() === "") {
+      setStatus("Tags cannot be empty.");
+      return;
+    }
 
+    try {
+      const newTags = tagInput.split(",").map((tag) => tag.trim()); // Convert comma-separated tags to array
+      const updatedThread = await addTagsToThread(threadId, newTags); // Call API
+      setThread(updatedThread); // Update thread state with new data
+      setTagInput(""); // Clear input field
+      setStatus("Tags added successfully!");
+    } catch (error) {
+      setStatus("Error adding tags: " + error.message);
+    }
+  };
 
-
-
-  // Handle loading or error states
   if (loading) return <p>Loading thread...</p>;
   if (error) return <p>{error}</p>;
 
@@ -64,10 +80,39 @@ const ThreadDetail = () => {
         <strong>By:</strong> {thread.author?.name || "Unknown Author"}
       </p>
       <p>
-        <strong>Created at:</strong>{" "}
-        {new Date(thread.creationDate).toLocaleString()}
+        <strong>Created at:</strong> {new Date(thread.creationDate).toLocaleString()}
       </p>
 
+      {/* Display Tags */}
+      <h3>Tags:</h3>
+      {thread.tags.length === 0 ? (
+        <p>No tags added yet.</p>
+      ) : (
+        <ul>
+          {thread.tags.map((tag, index) => (
+            <li key={index}>{tag}</li>
+          ))}
+        </ul>
+      )}
+
+      {/* Add Tags (Visible only to the thread owner) */}
+      {thread.author?._id === "currentUserId" && ( // Replace "currentUserId" with actual logged-in user ID
+        <div className="add-tags-form">
+          <h3>Add Tags</h3>
+          <form onSubmit={handleAddTags}>
+            <input
+              type="text"
+              value={tagInput}
+              onChange={(e) => setTagInput(e.target.value)}
+              placeholder="Enter tags, separated by commas"
+              required
+            />
+            <button type="submit">Add Tags</button>
+          </form>
+        </div>
+      )}
+
+      {/* Replies Section */}
       <h3>Replies:</h3>
       {thread.replies.length === 0 ? (
         <p>No replies yet. Be the first to reply!</p>
@@ -79,9 +124,7 @@ const ThreadDetail = () => {
               <p>
                 <strong>By:</strong> {reply.user?.name || "Anonymous"}
               </p>
-              <p>
-                <strong>On:</strong> {new Date(reply.createdAt).toLocaleString()}
-              </p>
+              
             </li>
           ))}
         </ul>

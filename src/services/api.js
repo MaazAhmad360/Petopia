@@ -65,16 +65,17 @@ export const addTagsToThread = async (threadId, tags) => {
 };
 
 // Search forum threads by query
-export const searchForumThreads = async (query) => {
+export const searchForumThreads = async (keyword, tags) => {
   try {
     const response = await API.get("/forumsThreads/search", {
-      params: { query },
+      params: { keyword, tags },
     });
     return response.data; // Return the search results
   } catch (error) {
-    throw new Error("Error searching threads: " + error.message);
+    throw new Error("none match your search ");
   }
 };
+
 
 // Fetch specific thread details
 export const fetchThreadDetails = async (threadId) => {

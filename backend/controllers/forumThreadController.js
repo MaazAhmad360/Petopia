@@ -1,6 +1,9 @@
 import forumsThreads from "../models/forumsThreads.js";
 import user from "../models/user.js"; // Correct model import
-
+// utils/auth.js
+import {
+ getUserId
+} from "../utils/auth.js";
 // Create a new forum thread
 export const createForumThread = async (req, res) => {
   try {
@@ -63,31 +66,31 @@ export const getforumThreads = async (req, res) => {
 };
 
 // Controller to add tags to a thread
-export const addTagsToThread = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { tags } = req.body;
+// export const addTagsToThread = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const { tags } = req.body;
 
-    // Find the thread and add tags
-    const updatedThread = await forumsThreads.findByIdAndUpdate(
-      id,
-      { $addToSet: { tags: { $each: tags } } }, // Prevent duplicate tags
-      { new: true }
-    );
+//     // Find the thread and add tags
+//     const updatedThread = await forumsThreads.findByIdAndUpdate(
+//       id,
+//       { $addToSet: { tags: { $each: tags } } }, // Prevent duplicate tags
+//       { new: true }
+//     );
 
-    if (!updatedThread) {
-      return res.status(404).json({ message: "Thread not found" });
-    }
+//     if (!updatedThread) {
+//       return res.status(404).json({ message: "Thread not found" });
+//     }
 
-    res
-      .status(200)
-      .json({ message: "Tags added successfully", thread: updatedThread });
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error adding tags", error: error.message });
-  }
-};
+//     res
+//       .status(200)
+//       .json({ message: "Tags added successfully", thread: updatedThread });
+//   } catch (error) {
+//     res
+//       .status(500)
+//       .json({ message: "Error adding tags", error: error.message });
+//   }
+// };
 
 export const searchForumThreads = async (req, res) => {
   try {
@@ -134,12 +137,11 @@ export const addTags = async (req, res) => {
   try {
     const { id } = req.params; // Thread ID
     const { tags } = req.body; // Tags to add
-    const userId = req.userId; // User ID from middleware
+    const userId = getUserId(req); // User ID from middleware
 
-    // Validate thread ownership
-    const thread = await forumsThreads.findOne({ _id: id, author: userId });
+    
 
-    if (!thread) {
+    if (!userId) {
       return res
         .status(403)
         .json({
@@ -167,7 +169,7 @@ export const addTags = async (req, res) => {
 export const replyToThread = async (req, res) => {
   try {
     const { threadId } = req.params; // Thread ID from the URL
-    const { username, content } = req.body; // Extract username and content from the request body
+    const { content } = req.body; // Extract username and content from the request body
 
     // Validate the content length
     if (content.length < 1) {
@@ -177,10 +179,8 @@ export const replyToThread = async (req, res) => {
     }
 
     // Find the user by username
-    const author = await user.findOne({
-      name: { $regex: new RegExp(username, "i") },
-    });
-    if (!author) {
+    const userId=getUserId(req);
+    if (!userId) {
       return res.status(404).json({ message: "User not found." });
     }
 
@@ -193,7 +193,7 @@ export const replyToThread = async (req, res) => {
 
     // Add the reply to the thread
     thread.replies.push({
-      user: author._id, // Use the user's ObjectId
+      user: userId._id, // Use the user's ObjectId
       content,
     });
     await thread.save();
