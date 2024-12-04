@@ -1,25 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchForumThreads, searchForumThreads } from "../services/api"; // Import API functions
+import { fetchForumThreads, searchForumThreads } from "../services/api";
 import "../styles/ThreadList.css"; 
 
 const ThreadList = () => {
-  const [threads, setThreads] = useState([]); // All threads or search results
-  const [status, setStatus] = useState(""); // Status message
-  const [searchQuery, setSearchQuery] = useState(""); // Search query
-  const [loading, setLoading] = useState(true); // Loading state
-  const navigate = useNavigate(); // Initialize useNavigate
+  const [threads, setThreads] = useState([]);
+  const [status, setStatus] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   // Fetch all threads on component mount
   useEffect(() => {
     const loadThreads = async () => {
       setLoading(true);
       try {
-        const data = await fetchForumThreads(); // Fetch threads from the API
-        setThreads(data); // Set threads to state
+        const data = await fetchForumThreads();
+        setThreads(data);
         setLoading(false);
       } catch (error) {
-        setStatus("Error fetching threads: " + error.message); // Handle errors
+        setStatus("Error fetching threads: " + error.message);
         setLoading(false);
       }
     };
@@ -27,14 +27,15 @@ const ThreadList = () => {
     loadThreads();
   }, []);
 
-  // Handle thread click to navigate to the thread detail page
+  // Handle thread click
   const handleThreadClick = (threadId) => {
-    navigate(`/thread/${threadId}`); // Navigate to thread details page
+    navigate(`/thread/${threadId}`);
   };
 
   // Handle search functionality
   const handleSearch = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent page refresh
+
     if (!searchQuery.trim()) {
       setStatus("Please enter a search query.");
       return;
@@ -42,19 +43,19 @@ const ThreadList = () => {
 
     setLoading(true);
     try {
-      const results = await searchForumThreads(searchQuery); // Search threads
-      setThreads(results); // Update threads with search results
-      setStatus(""); // Clear status
+      const results = await searchForumThreads(searchQuery);
+      setThreads(results);
+      setStatus(results.length > 0 ? "" : "No threads found.");
       setLoading(false);
     } catch (error) {
-      setStatus("Error searching threads: " + error.message); // Handle errors
+      setStatus("Error searching threads: " + error.message);
       setLoading(false);
     }
   };
 
-  // Handle creating a new thread
+  // Handle navigating to create thread page
   const handleCreateThread = () => {
-    navigate("/create-thread"); // Navigate to the thread creation page
+    navigate("/create-thread");
   };
 
   return (
@@ -94,7 +95,7 @@ const ThreadList = () => {
                 {thread.title}
               </button>
               <p>
-                by <strong>{thread.author.name}</strong> on{" "}
+                by <strong>{thread.author?.name || "Unknown"}</strong> on{" "}
                 {new Date(thread.creationDate).toLocaleString()}
               </p>
             </li>
