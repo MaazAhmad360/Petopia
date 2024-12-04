@@ -1,4 +1,37 @@
 import Event from "../models/events.js";
+import { getUserId } from "../utils/auth.js"; // Import authentication helper
+
+// Register a user for an event
+export const registerForEvent = async (req, res) => {
+  try {
+    // Get the user ID from the token
+    const userId = getUserId(req);
+    if (!userId) {
+      return res.status(401).json({ error: "Unauthorized: Invalid or missing token." });
+    }
+
+    const { eventId } = req.body; // Extract event ID from the request body
+
+    // Find the event
+    const event = await Event.findById(eventId);
+    if (!event) {
+      return res.status(404).json({ error: "Event not found." });
+    }
+
+    // Check if the user is already an attendee
+    if (event.attendees.includes(userId)) {
+      return res.status(400).json({ error: "User already registered for this event." });
+    }
+
+    // Add the user to the attendees list
+    event.attendees.push(userId);
+    await event.save();
+
+    res.status(200).json({ message: "Successfully registered for the event!", event });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
 // Create a new event
 export const createEvent = async (req, res) => {
