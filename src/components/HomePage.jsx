@@ -1,7 +1,7 @@
 import React from "react";
+import Navbar from "../components/Navbar";
 import "../styles/HomePage.css";
 import petImage from "../assets/pet.jpg";
-
 
 const HomePage = () => {
   return (
@@ -12,18 +12,7 @@ const HomePage = () => {
       </header>
 
       {/* Sidebar for navigation */}
-      <aside className="sidebar">
-        <nav>
-          <ul>
-            <li><a href="/events">Events</a></li>
-            <li><a href="/adoption">Pet Adoption</a></li>
-            <li><a href="/petmate">Pet Mate</a></li>
-            <li><a href="/equipment">Pet Equipment</a></li>
-            <li><a href="/veterinary">Veterinary Services</a></li>
-            <li><a href="/forum">Forum</a></li>
-          </ul>
-        </nav>
-      </aside>
+      <Navbar />
 
       {/* Main content */}
       <main className="main-content">
@@ -33,7 +22,7 @@ const HomePage = () => {
             <p>From events to adoptions, and even finding a mate for your pet – Petopia is here to help!</p>
           </div>
           <div className="image-container">
-          <img src={petImage} alt="Happy pets" />
+            <img src={petImage} alt="Happy pets" />
           </div>
         </div>
       </main>

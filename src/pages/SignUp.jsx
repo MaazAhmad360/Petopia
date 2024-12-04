@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../AxioInstance";
-import image from '../assets/pet.jpg'
-import './Login.css'
+import image from '../assets/pet.jpg';
+import UserDetailsModal from "../components/UserDetailsModal"; // Import the modal
+import './Login.css';
 
 const SignUp = () => {
-
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: "",
@@ -13,6 +13,8 @@ const SignUp = () => {
         email: "",
         password: ""
     });
+
+    const [showModal, setShowModal] = useState(false); // State to control modal visibility
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -26,24 +28,21 @@ const SignUp = () => {
         e.preventDefault();
         try {
             const response = await axios.post("/api/user/register", formData);
-            // const response = await fetch("http://localhost:3000/api/signup", {
-            //     method: "POST",
-            //     headers: {
-            //         "Content-Type": "application/json"
-            //     },
-            //     body: JSON.stringify(formData)
-            // });
-            if (response.status == 201) {
+            if (response.status === 201) {
                 // User successfully registered
                 console.log("User registered successfully");
-                navigate('/login');
+                setShowModal(true); // Show modal for additional details
             } else {
-                // Failed to register user
                 console.error("Failed to register user");
             }
         } catch (error) {
             console.error("Error:", error);
         }
+    };
+
+    const handleModalClose = () => {
+        setShowModal(false); // Close the modal
+        navigate('/login'); // Redirect to login after modal is closed
     };
 
     return (
@@ -55,37 +54,52 @@ const SignUp = () => {
                     <form onSubmit={handleSubmit}>
                         <div className="signupWrapper loginWrapper">
                             <div className="inputWrapper">
-                                <input type="text" className="primary" name="name" placeholder="Name" value={formData.name} onChange={handleChange}></input>
-                                <input type="text" className="primary" name="username" placeholder="Username" value={formData.username} onChange={handleChange}></input>
-                                <input type="email" className="primary" name="email" placeholder="Email" value={formData.email} onChange={handleChange}></input>
-                                <input type="password" className="primary" name="password" placeholder="Password" value={formData.password} onChange={handleChange}></input>
-
-
-                                {/* <div className="checkboxWrapper">
-                                <div className="checkbox">
-                                    <span onClick={toggleCheck}>
-                                        <input type="checkbox" checked={isChecked= getInitialState} />
-                                        <span></span>
-                                    </span>
-                                    <label>Remember Me
-                                        <input className="box" type="checkbox"></input>
-                                    </label>
-                                    <div className="box"></div>
-                                    <p>Remember Me</p>
-                                </div>
-                                <p className="alert">Forgot Password?</p>
-                            </div> */}
+                                <input
+                                    type="text"
+                                    className="primary"
+                                    name="name"
+                                    placeholder="Name"
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                />
+                                <input
+                                    type="text"
+                                    className="primary"
+                                    name="username"
+                                    placeholder="Username"
+                                    value={formData.username}
+                                    onChange={handleChange}
+                                />
+                                <input
+                                    type="email"
+                                    className="primary"
+                                    name="email"
+                                    placeholder="Email"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                />
+                                <input
+                                    type="password"
+                                    className="primary"
+                                    name="password"
+                                    placeholder="Password"
+                                    value={formData.password}
+                                    onChange={handleChange}
+                                />
                             </div>
                             <button type="submit" className="button secondary">Register</button>
                         </div>
                     </form>
                 </div>
                 <div className="imageContainer">
-                    <img src={image}></img>
+                    <img src={image} alt="Pet"></img>
                 </div>
             </div>
-        </React.Fragment>
-    )
-}
 
-export default SignUp
+            {/* User Details Modal */}
+            {showModal && <UserDetailsModal onClose={handleModalClose} />}
+        </React.Fragment>
+    );
+};
+
+export default SignUp;

@@ -54,7 +54,7 @@ export const loginUser = async (req, res) => {
 };
 
 export const addUserDetails = async (req, res) => {
-  const { firstname, lastname, gender } = req.body;
+  const { firstname, lastname, gender,  imageUrl, favoritePet, preferredBreeds, servicesLookingFor } = req.body;
   const user = getUserId(req);
 
   try {
@@ -64,6 +64,7 @@ export const addUserDetails = async (req, res) => {
       firstname,
       lastname,
       gender,
+      imageUrl, favoritePet, preferredBreeds, servicesLookingFor
     });
     // Save the user to the database
     await newUserDetail.save();

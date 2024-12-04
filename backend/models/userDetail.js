@@ -21,6 +21,21 @@ const userDetailSchema = new mongoose.Schema({
     enum: ["Male", "Female", "Other"], // Optional: Restrict to specific values
     required: true,
   },
+  imageUrl: { type: String, default: "/default-avatar.png" },
+  favoritePet: {
+    type: String,
+    trim: true,
+  },
+  preferredBreeds: [
+    {
+      type: String,
+    },
+  ],
+  servicesLookingFor: [
+    {
+      type: String,
+    },
+  ],
 }, {
   timestamps: true, // Automatically adds createdAt and updatedAt fields
 });
