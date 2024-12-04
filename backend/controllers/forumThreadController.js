@@ -193,7 +193,7 @@ export const replyToThread = async (req, res) => {
 
     // Add the reply to the thread
     thread.replies.push({
-      user: userId._id, // Use the user's ObjectId
+      user: userId, // Use the user's ObjectId
       content,
     });
     await thread.save();
@@ -230,5 +230,22 @@ export const getThreadDetails = async (req, res) => {
         message: "Error fetching thread details.",
         error: error.message,
       });
+  }
+};
+
+// Controller to get threads created by the logged-in user
+export const getUserThreads = async (req, res) => {
+  const userId = getUserId(req); // Extract user ID from the token
+
+  if (!userId) {
+    return res.status(401).json({ error: "Unauthorized: Invalid or missing token" });
+  }
+
+  try {
+    const userThreads = await forumsThreads.find({ author: userId }).populate("author", "username email");
+    res.status(200).json(userThreads);
+  } catch (error) {
+    console.error("Error fetching user threads:", error);
+    res.status(500).json({ error: "Failed to fetch user threads" });
   }
 };

@@ -28,6 +28,8 @@ import HomePage from "./components/HomePage";
 import Signup from "./pages/SignUp";
 import Login from "./pages/Login";
 
+import ProfilePage from "./pages/ProfilePage";
+
 const App = () => {
   return (
     <Router>
@@ -59,6 +61,8 @@ const App = () => {
           <Route path="/adoption" element={<AdoptionSearch />} />
           <Route path="/adoption/:id" element={<AdoptionDetails />} />
           <Route path="/adoption/create" element={<CreateAdoptionListing />} />
+
+          <Route path="/profile-page" element={<ProfilePage />} />
           </Route>
           {/* Login/Signup Pages */}
           <Route path="/login" element={<Login />} />
